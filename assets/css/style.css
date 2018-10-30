@@ -6,6 +6,7 @@ i{
     text-align: center;
     margin-top: 20px;
     padding-top: -20px;
+    margin-bottom:20px;
 }
 
 body{
@@ -15,4 +16,8 @@ body{
     height: 100vh;
     
    
+}
+
+#signin{
+    background-color: rgb(250, 248, 248, 0.7);
 }
