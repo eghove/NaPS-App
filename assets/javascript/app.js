@@ -1,7 +1,7 @@
 var ParkNames = [];
 
 var npsSearch = "Colorado";
-var npsURL = "https://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
+var npsURL = "http://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
 
 $.ajax({
     url: npsURL,
@@ -13,7 +13,7 @@ $.ajax({
 
     for (var j = 0; j < ParkData.length; j++) {
         
-        ParkNames.push("https://developer.nps.gov/api/v1/campgrounds?q=" + ParkData[j].fullName + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc");
+        ParkNames.push("http://developer.nps.gov/api/v1/campgrounds?q=" + ParkData[j].fullName + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc");
     }
 
     camping();
@@ -27,7 +27,7 @@ function camping() {
     for(var i=0;i<ParkNames.length;i++) {
         
         $.ajax({
-            url: ParkNames[i],
+            url: ParkNames[1],
             method: "GET"
         }).then(function(response1) {
             console.log(response1);
