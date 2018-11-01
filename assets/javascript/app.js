@@ -1,8 +1,12 @@
+//GLOBAL VARIABLES
+//===============================================================
 var ParkNames = [];
 
 var npsSearch = "Colorado";
 var npsURL = "http://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
 
+//FUNCTIONS
+//===============================================================
 $.ajax({
     url: npsURL,
     method: "GET"
@@ -34,94 +38,6 @@ function camping() {
         });
     };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -182,4 +98,5 @@ function NASAQuery (longitude, latitude) {
       });
 };
 
- 
+ //MAIN PROCESSES
+ //===============================================================
