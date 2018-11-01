@@ -9,6 +9,7 @@ var npsURL = "http://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=
 let latLongParkData = [];
 
 //array that will capture the imagre URLs from NASA for the park results page
+let NASAImages = [];
 
 //FUNCTIONS
 //===============================================================
@@ -27,8 +28,10 @@ $.ajax({
         //push the latitude and longitude string from the above response into latLongParkData array
         latLongParkData.push(ParkData[j].latLong);
     }
+    //calls the function that parses the latitude and longitude into something the other APIs can use
     latLongParser();
-    NASAQuery(latLongParkData[0][0], latLongParkData[0][1]);
+    //push the NASA images to NASA Images Array
+    NASAImagePush();
     camping();
 });
 
@@ -97,16 +100,16 @@ function NASAQuery (latitude, longitude) {
     //setting up the query url
     let NASAQueryURL = NASABaseURL + 'lon=' + longitudeParam + '&lat=' + latitudeParam + '&api_key=' + NASAAPIKey ;
     //console.log(NASAQueryURL);
-    let NASAImageURL='';
     //the ajax call
     $.ajax({
         url: NASAQueryURL,
         method: "GET"
       })
       .then(function(response) {
-          NASAImageURL = response.url;
-          console.log(NASAQueryURL);
-          console.log(NASAImageURL);
+          //sets the url for the image to NASAImageURL variables
+          let NASAImageURL = response.url;
+          //push the url for the image to the NASAImages array
+          NASAImages.push(NASAImageURL);
       });
 };
 
@@ -133,12 +136,17 @@ function latLongParser() {
             //put the new converted value back into itemToConvert array
             itemToConvert[l] = value;
         }
-
         //replaces the items in the original latLongParkData array with the converted strings
         latLongParkData[k] = itemToConvert;
-        console.log(latLongParkData);
     }
 };
+
+function NASAImagePush () {
+    for (let m=0; m < latLongParkData.length; m++) {
+        NASAQuery(latLongParkData[m][0], latLongParkData[m][1]);
+    }
+    console.log(NASAImages);
+}
  //MAIN PROCESSES
  //===============================================================
 
