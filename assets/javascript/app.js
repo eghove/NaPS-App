@@ -1,6 +1,6 @@
 var ParkNames = [];
 
-var npsSearch = "Colorado";
+var npsSearch = "";
 var npsURL = "http://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
 
 $.ajax({
