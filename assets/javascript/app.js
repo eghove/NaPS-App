@@ -188,7 +188,7 @@ function camping() {
 
 
 
-
+//weather Quaery API
 function weatherQuery(latitude, longitude) {
     // open weather api key
 
@@ -198,28 +198,34 @@ function weatherQuery(latitude, longitude) {
 
     var weatherBaseURL = "https://api.openweathermap.org/data/2.5/weather?"
 
-    var latitudeParam = latitude;
+    let weatherLatitudeParam = latitude;
 
-    var longitudeParam = longitude;
+    let weatherLongtudeParam = longitude;
 
     // setting up the query url
-    var weatherQueryURL = weatherBaseURL + "lat=" + latitudeParam + "&lon=" + longitudeParam + "&appid=" + weatherAPIkey;
+    var weatherQueryURL = weatherBaseURL + "lat=" + weatherLatitudeParam  + "&lon=" + weatherLongtudeParam + "&appid=" + weatherAPIkey;
     console.log(weatherQueryURL);
-
-    //   var currentweatherURL= "test";
-    //   console.log(currentweatherURL);
-
-    //    $.ajax({
-    //        URL: weatherQueryURL,
-    //        method: "GET"
-    //      })
-    //      .then(function(response){
-    //          currentweatherURL = response.url;
-    //          console.log(currentweatherURL);
-
-    //      });
-
-}
+    
+    //the Ajax call
+    $.ajax({
+           url: weatherQueryURL,
+           method: "GET"
+         })
+         .then(function(response){
+           //capture the temperature, convert it to F
+            var temperature = (response.main.temp - 273.15) * 1.80 + 32;
+            var temperature = temperature.toFixed(2);
+            //capture the windspeed
+            var windspeed = response.wind.speed;
+            //capture the humidity
+            var humidity = response.main.humidity;
+            //weather description
+            var weatherDescrip = "";
+            weatherDescrip = response.weather[0].description;
+          
+            //console.log(temperature + " " + windspeed + " " + humidity + " " + weatherDescrip);
+         })
+  }
 
 //basic NASA Satellinte Imagery API QUERY FUNCTION
 function NASAQuery(latitude, longitude) {
