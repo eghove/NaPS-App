@@ -17,13 +17,8 @@ let NASAImages = [];
 // array that will capture the Park Names
 var ParkNames = [];
 
-<<<<<<< HEAD
-var npsSearch = "";
-var npsURL = "http://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
-=======
 // array that will capture the park description
 var ParkDescription = [];
->>>>>>> master
 
 // this will be an array that will hold campsite objects for each park in order.
 var campsiteObjects = [];
