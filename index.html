@@ -9,7 +9,7 @@
     <!--Moved JQuery before the site's javascript link-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="./assets/javascript/app.js"></script>
-    
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
@@ -22,35 +22,52 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="card" id = "container_1">
-                <div class="card-body">
+                <div class="card" id="container_1">
+                    <div class="card-body">
 
-                    <i class="fas fa-hiking">
-                        <a class="navbar-brand">
-                            <h1>NaPS App</h1>
-                        </a>
-                    </i>
-                </div>
+                        <i class="fas fa-hiking">
+                            <a class="navbar-brand">
+                                <h1>NaPS App</h1>
+                            </a>
+                        </i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class = "container">
-        <div class = "row">
-            <div class = "col-md-12">
-                <div class = "card" id ="signin">
-                    <div class = "card-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" id="signin">
+                    <div class="card-body">
                         <form>
                             <label for="username1">User Name:</label>
                             <input type="text" id="username1" class="form-control">
                             <label for="userpassword1">Password:</label>
                             <input type="text" id="userpassword1" class="form-control">
-                            <br><br>
+                            <br>
+                            <br>
                             <button type="button" class="btn btn-success">Submit</button>
                         </form>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-md-8">
+                <nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand">NapsApp</a>
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </nav>
+
             </div>
         </div>
     </div>
