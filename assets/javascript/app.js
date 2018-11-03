@@ -7,6 +7,7 @@ var npsSearch;
 var npsURL;
 var nasalat;
 var nasalon;
+var z = 0;
 
 //array that captures the latitude and longitude of each NPS returned from the initial NPS ajax call
 let latLongParkData = [];
@@ -94,7 +95,6 @@ function Search() {
 
 
 
-
     });
 
     //console.log(ParkNames);
@@ -102,19 +102,14 @@ function Search() {
 
 };
 
-function print() {
-    for (var q = 0; q < NASAImages.length; q++) {
+// function print() {
+//     for (var q = 0; q < NASAImages.length; q++) {
 
-        // third well for images
-        var imageWell = $("<div>");
-        // throw in the src for the nasa images
-        imageWell.html("<img src=" + NASAImages[q] + ">");
+//         // third well for images
 
-        $("#well3").append(imageWell);
-        console.log(imageWell)
-    }
+//     }
 
-}
+// }
 
 function camping() {
     console.log("hi");
@@ -207,6 +202,19 @@ function NASAQuery(latitude, longitude) {
             let NASAImageURL = response.url;
             //push the url for the image to the NASAImages array
             NASAImages.push(NASAImageURL);
+
+            var imageWell = $("<div>");
+            // throw in the src for the nasa images
+            imageWell.html("<img src=" + NASAImages[z] + ">");
+    
+            $("#well3").append(imageWell);
+            console.log(imageWell)
+
+            z++
+            
+        })
+        .fail(function(error) {
+
         });
 };
 
@@ -246,7 +254,6 @@ function NASAImagePush() {
 
     }
 
-    print();
     console.log(nasalat)
     console.log(nasalon)
     console.log(NASAImages);
