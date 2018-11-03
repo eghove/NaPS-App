@@ -22,7 +22,15 @@ var ParkNames = [];
 var ParkDescription = [];
 
 // this will be an array that will hold campsite objects for each park in order.
-var campsiteObjects = [];
+var CampsiteLocations = [];
+var CampsiteNames = [];
+var CampsiteDescription = [];
+var CampsiteDirections = [];
+var CampsiteWeather = [];
+var CampsiteWater = [];
+var CampsiteToilets = [];
+var CampsiteShowers = [];
+
 
 //EVENT LISTENERS
 // ==============================================================
@@ -91,7 +99,7 @@ function Search() {
         latLongParser();
         //push the NASA images to NASA Images Array
         NASAImagePush();
-        // camping();
+        camping();
 
 
 
@@ -120,21 +128,53 @@ function camping() {
             url: campURL[i],
             method: "GET"
         }).then(function (response) {
-            campsiteObjects.push(response.data);
-            console.log(campsiteObjects)
-            for (var r; r < campsiteObjects[i].length; r++) {
-                // if (campsiteObjects[q].length == 0) {
-                //     return false;
-                // }
-                console.log(campsiteObjects[i][r])
+            var campData = response.data;
+            console.log(campData);
 
-                var campsiteNames = $("<p>");
 
-                campsiteNames.append(campsiteObjects[i][r].name);
 
-                $("#well4").append(campsiteNames);
+            for (var c = 0; c < campData.length; c++) {
+                CampsiteNames.push(campData[c].name);
+                CampsiteDescription.push(campData[c].description);
+                CampsiteDirections.push(campData[c].directionsUrl);
+                CampsiteWeather.push(campData[c].weatherOverview);
+                CampsiteWater.push(campData[c].amenities.potableWater[0]);
+                CampsiteToilets.push(campData[c].amenities.toilets[0]);
+                CampsiteShowers.push(campData[c].amenities.showers[0]);
+                console.log(CampsiteNames);
 
-                console.log(campsiteNames);
+
+                for (var v = 0; v < CampsiteNames.length; v++) {
+                    var campsiteNameWell = $("<h4>");
+
+                    campsiteNameWell.append(CampsiteNames[v]);
+
+                    var campsiteInfoWell = $("<p>");
+
+                    campsiteInfoWell.append("<br><br>" + "Description : " + CampsiteDescription[v])
+
+                    campsiteInfoWell.append("<br><br>" + "<a href="+ CampsiteDirections[v] +">" + "Directions" + "</a>");
+
+                    campsiteInfoWell.append("<br><br>" + "Weather Overview : " + CampsiteWeather[v]);
+
+                    campsiteInfoWell.append("<br><br>" + "Potable Water : " + CampsiteWater[v]);
+
+                    campsiteInfoWell.append("<br><br>" + "Toilets : " + CampsiteToilets[v]);
+
+                    campsiteInfoWell.append("<br><br>" + "Showers : " + CampsiteShowers[v]);
+
+                    $("#well4").append(campsiteNameWell);
+                    $("#well4").append(campsiteInfoWell);
+
+
+                }
+                CampsiteNames = [];
+                CampsiteDescription = [];
+                CampsiteDirections = [];
+                CampsiteWeather = [];
+                CampsiteWater = [];
+                CampsiteToilets = [];
+                CampsiteShowers = [];
             }
         });
     };
@@ -206,14 +246,14 @@ function NASAQuery(latitude, longitude) {
             var imageWell = $("<div>");
             // throw in the src for the nasa images
             imageWell.html("<img src=" + NASAImages[z] + ">");
-    
+
             $("#well3").append(imageWell);
             console.log(imageWell)
 
             z++
-            
+
         })
-        .fail(function(error) {
+        .fail(function (error) {
 
         });
 };
