@@ -252,9 +252,11 @@ function NASAQuery(latitude, longitude) {
             var imageWell = $("<div>");
             // throw in the src for the nasa images
             imageWell.html("<img src=" + NASAImages[z] + ">");
+            //used this console to make sure real images and fail images are showing up in the rigth places
+            //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
 
             $("#well3").append(imageWell);
-            console.log(imageWell);
+            //console.log(imageWell);
 
             z++;
 
@@ -269,9 +271,11 @@ function NASAQuery(latitude, longitude) {
             var imageWell = $("<div>");
             // throw in the src for the nasa images
             imageWell.html("<img src=" + NASAImages[z] + ">");
+            //used this console to make sure real images and fail images are showing up in the rigth places
+            //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
 
             $("#well3").append(imageWell);
-            console.log(imageWell);
+            //console.log(imageWell);
 
             z++;
         });
