@@ -346,7 +346,11 @@ function resestDefaults() {
     //reset CampsiteShowers array
     CampsiteShowers=[];
 
-    //PROBABLY WANT TO CLEAR OUT THE WELLS HERE TOO
+    //PROBABLY WANT TO CLEAR OUT THE WELLS HERE TOO, for now used the wells from Alan's code
+    $("#well1").empty();
+    $("#well2").empty();
+    $("#well3").empty();
+    $("#well4").empty();
 
 }
  //MAIN PROCESSES
