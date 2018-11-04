@@ -35,6 +35,12 @@ var CampsiteShowers = [];
 //EVENT LISTENERS
 // ==============================================================
 $(document).ready(function () {
+    //checks to see if the user is authenticated
+    authUserCheck();
+    //on click listener for the logout button
+    $('#Logout').on("click", function() {
+        logOut();
+    });
     $("#Search").on("click", function (event) {
         event.preventDefault();
 
@@ -303,6 +309,28 @@ function NASAImagePush() {
     console.log(nasalat)
     console.log(nasalon)
     console.log(NASAImages);
+}
+
+//the function that will re-direct the user back to the login page if an account has not yet been created (self-invoking)
+function authUserCheck() {
+    var firebase = app_fireBase;
+    var uid=null;
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          uid = user.uid;
+        } else {
+            //redirect to login page
+            uid = null;
+            window.location.replace("login.html");
+        }
+      });
+
+      
+};
+//logs the user out
+function logOut () {
+    firebase.auth().signOut();
 }
  //MAIN PROCESSES
  //===============================================================
