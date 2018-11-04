@@ -37,8 +37,10 @@ var CampsiteShowers = [];
 $(document).ready(function () {
     $("#Search").on("click", function (event) {
         event.preventDefault();
-
-        Search()
+        //reset the gloabal variables before executing the search
+        resestDefaults();
+        //excecutes the Search
+        Search();
 
     })
 });
@@ -295,7 +297,7 @@ function latLongParser() {
 function NASAImagePush() {
     for (let m = 0; m < latLongParkData.length; m++) {
         nasalat = latLongParkData[m][0];
-        nasalon = latLongParkData[m][1]
+        nasalon = latLongParkData[m][1];
         NASAQuery(nasalat, nasalon);
 
     }
@@ -303,6 +305,49 @@ function NASAImagePush() {
     console.log(nasalat)
     console.log(nasalon)
     console.log(NASAImages);
+}
+
+//restores defaults to all global variables that will be changed in the process of executing a search
+function resestDefaults() {
+    //reset campURL
+    campURL=[];
+    //reset npsSearch
+    npsSearch="";
+    //reset npsURL
+    npsURL="";
+    //reset nasalat
+    nasalat="";
+    //reset nasalon
+    nasalon="";
+    //reset var z ?
+    z = 0;
+    //reset latLongParkData array
+    latLongParkData = [];
+    //reset NASAImages array
+    NASAImages = [];
+    //reset ParkNames array
+    ParkNames =[];
+    //reset ParkDescription array
+    ParkDescription=[];
+    //reset CampsiteLocations array
+    CampsiteLocations=[];
+    //reset CampsiteNames array
+    CampsiteNames=[];
+    //reset CampsiteDescription array
+    CampsiteDescription=[];
+    //reset CampsiteDirections array
+    CampsiteDirections=[];
+    //reset CampsiteWeather array
+    CampsiteWeather=[];
+    //reset CampsiteWeather array
+    CampsiteWater=[];
+    //reset CampsiteToilets array
+    CampsiteToilets=[];
+    //reset CampsiteShowers array
+    CampsiteShowers=[];
+
+    //PROBABLY WANT TO CLEAR OUT THE WELLS HERE TOO
+
 }
  //MAIN PROCESSES
  //===============================================================
