@@ -254,13 +254,26 @@ function NASAQuery(latitude, longitude) {
             imageWell.html("<img src=" + NASAImages[z] + ">");
 
             $("#well3").append(imageWell);
-            console.log(imageWell)
+            console.log(imageWell);
 
-            z++
+            z++;
 
         })
         .fail(function (error) {
+            //set up default image
+            let defaultImageUrl= 'https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image';
+            //push the link to the default image to NASAImages array
+            NASAImages.push(defaultImageUrl);
 
+            //copied this code from the .then function above.
+            var imageWell = $("<div>");
+            // throw in the src for the nasa images
+            imageWell.html("<img src=" + NASAImages[z] + ">");
+
+            $("#well3").append(imageWell);
+            console.log(imageWell);
+
+            z++;
         });
 };
 
