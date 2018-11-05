@@ -8,6 +8,9 @@ var npsURL;
 var nasalat;
 var nasalon;
 var z = 0;
+var b = 0;
+var weatherlat;
+var weatherlon;
 
 //array that captures the latitude and longitude of each NPS returned from the initial NPS ajax call
 let latLongParkData = [];
@@ -31,12 +34,55 @@ var CampsiteWater = [];
 var CampsiteToilets = [];
 var CampsiteShowers = [];
 
+var WeatherTemperature = [];
+var WeatherWind = [];
+var WeatherHumidity = [];
+var WeatherDescription = [];
+
 
 //EVENT LISTENERS
 // ==============================================================
 $(document).ready(function () {
     $("#Search").on("click", function (event) {
         event.preventDefault();
+
+        campURL = [];
+
+        npsSearch = "";
+        npsURL = [];
+        nasalat = [];
+        nasalon = [];
+        z = 0;
+        b = 0;
+        weatherlat = [];
+        weatherlon = [];
+
+        latLongParkData = [];
+
+        NASAImages = [];
+
+        ParkNames = [];
+        ParkDescription = [];
+
+        CampsiteLocations = [];
+        CampsiteNames = [];
+        CampsiteDescription = [];
+        CampsiteDirections = [];
+        CampsiteWeather = [];
+        CampsiteWater = [];
+        CampsiteToilets = [];
+        CampsiteShowers = [];
+
+        WeatherTemperature = [];
+        WeatherWind = [];
+        WeatherHumidity = [];
+        WeatherDescription = [];
+
+        $("#well1").empty();
+        $("#well2").empty();
+        $("#well3").empty();
+        $("#well4").empty();
+        $("#well5").empty();
 
         Search()
 
@@ -100,6 +146,7 @@ function Search() {
         //push the NASA images to NASA Images Array
         NASAImagePush();
         camping();
+        WeatherInfoPush();
 
 
 
@@ -153,7 +200,7 @@ function camping() {
 
                     campsiteInfoWell.append("<br><br>" + "Description : " + CampsiteDescription[v])
 
-                    campsiteInfoWell.append("<br><br>" + "<a href="+ CampsiteDirections[v] +">" + "Directions" + "</a>");
+                    campsiteInfoWell.append("<br><br>" + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>");
 
                     campsiteInfoWell.append("<br><br>" + "Weather Overview : " + CampsiteWeather[v]);
 
@@ -203,29 +250,59 @@ function weatherQuery(latitude, longitude) {
     let weatherLongtudeParam = longitude;
 
     // setting up the query url
-    var weatherQueryURL = weatherBaseURL + "lat=" + weatherLatitudeParam  + "&lon=" + weatherLongtudeParam + "&appid=" + weatherAPIkey;
+    var weatherQueryURL = weatherBaseURL + "lat=" + weatherLatitudeParam + "&lon=" + weatherLongtudeParam + "&appid=" + weatherAPIkey;
     console.log(weatherQueryURL);
-    
+
     //the Ajax call
     $.ajax({
-           url: weatherQueryURL,
-           method: "GET"
-         })
-         .then(function(response){
-           //capture the temperature, convert it to F
+        url: weatherQueryURL,
+        method: "GET"
+    })
+        .then(function (response) {
+            //capture the temperature, convert it to F
             var temperature = (response.main.temp - 273.15) * 1.80 + 32;
             var temperature = temperature.toFixed(2);
+
+            WeatherTemperature.push(temperature);
+
             //capture the windspeed
             var windspeed = response.wind.speed;
+
+            WeatherWind.push(windspeed);
+
             //capture the humidity
             var humidity = response.main.humidity;
+
+            WeatherHumidity.push(humidity);
+
             //weather description
             var weatherDescrip = "";
             weatherDescrip = response.weather[0].description;
-          
+
+            WeatherDescription.push(weatherDescrip);
+
+            console.log(temperature);
+            console.log(windspeed);
+            console.log(humidity);
+            console.log(weatherDescrip);
+
+            var WeatherWell = $("<p>");
+
+            WeatherWell.append("<br><br> Temperature : " + WeatherTemperature[b] + "F");
+
+            WeatherWell.append("<br><br> Wind Speed : " + WeatherWind[b] + "mph");
+
+            WeatherWell.append("<br><br> Humidity : " + WeatherHumidity[b] + "%");
+
+            WeatherWell.append("<br><br> Weather Description : " + WeatherDescription[b]);
+
+            $("#well5").append(WeatherWell);
+
+            b++;
+
             //console.log(temperature + " " + windspeed + " " + humidity + " " + weatherDescrip);
-         })
-  }
+        })
+}
 
 //basic NASA Satellinte Imagery API QUERY FUNCTION
 function NASAQuery(latitude, longitude) {
@@ -297,6 +374,19 @@ function NASAImagePush() {
         nasalat = latLongParkData[m][0];
         nasalon = latLongParkData[m][1]
         NASAQuery(nasalat, nasalon);
+
+    }
+
+    console.log(nasalat)
+    console.log(nasalon)
+    console.log(NASAImages);
+}
+
+function WeatherInfoPush() {
+    for (let p = 0; p < latLongParkData.length; p++) {
+        weatherlat = latLongParkData[p][0];
+        weatherlon = latLongParkData[p][1]
+        weatherQuery(weatherlat, weatherlon);
 
     }
 
