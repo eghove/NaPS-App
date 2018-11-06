@@ -84,7 +84,9 @@ $(document).ready(function () {
         $("#well4").empty();
         $("#well5").empty();
 
-        Search()
+        Search();
+       
+    
 
     })
 });
@@ -123,21 +125,31 @@ function Search() {
             //push the latitude and longitude string from the above response into latLongParkData array
             latLongParkData.push(ParkData[j].latLong);
 
-            // this will be used as the DOM storage to be appended to the html
-            var parkNameWell = $("<h2>");
-            // first storing name of park
-            parkNameWell.append(ParkData[j].fullName);
-            // second well for description
-            var descriptionWell = $("<h4>");
-            // then storing the description of the park
-            descriptionWell.append(ParkData[j].description);
-
-
+            // // this will be used as the DOM storage to be appended to the html
+            // var parkNameWell = $("<h2>");
+            // // first storing name of park
+            // parkNameWell.append(ParkData[j].fullName);
+            // // second well for description
+            // var descriptionWell = $("<h4>");
+            // // then storing the description of the park
+            // descriptionWell.append(ParkData[j].description);
 
             // append them to the html
-            $("#well1").append(parkNameWell);
-            $("#well2").append(descriptionWell);
-            $(".accordion").append("<h3>").append("<div>").append(parkNameWell).append(descriptionWell);
+
+            //Putting the accordions on the Page
+            var displayParkName=$("<h3>" + ParkNames[j] + "</h3>");
+
+            var displayParkDescription=$("<div><p>" + ParkDescription[j] +  "</p></div>");
+           
+            
+            
+            // $("#well1").append(parkNameWell);
+            // $("#well2").append(descriptionWell);
+            $("#accordion").append(displayParkName).append(displayParkDescription);
+            $( function() {
+                $( "#accordion" ).accordion();
+              } );
+    
 
 
 
@@ -414,6 +426,4 @@ function WeatherInfoPush() {
 }
  //MAIN PROCESSES
  //===============================================================
- $( function() {
-    $( ".accordion" ).accordion();
-  } );
+ 
