@@ -140,7 +140,7 @@ function Search() {
             parkInfoWell.append(
                 "<div class = 'container'><div class = 'row'><div class = 'col-md-12'><div class='card'"
                 + " style='background-color: rgb(250, 248, 248, 0.7); margin-top: 20px'><div class ='card-body'><h1>"
-                + ParkData[j].fullName + "</h1><br><br><p>" + ParkData[j].description + "</p><br><br><div id='img" + j
+                + ParkData[j].fullName + "</h1><br><button class='back btn btn-default btn-sm'>Back</button><br><p>" + ParkData[j].description + "</p><br><br><div id='img" + j
                 + "'></div><br><br><div id='weather" + j + "'></div><div class = 'accordions" + j + "'>" + "</div></div></div></div></div></div></div>"
             );
 
@@ -157,13 +157,6 @@ function Search() {
             var descriptionWell = $("<h4>");
             // then storing the description of the park
             descriptionWell.append(ParkData[j].description);
-
-            var buttonWell = $("<button>");
-            buttonWell.addClass("button");
-            buttonWell.attr("value", j);
-            buttonWell.append("<p>Go</p>")
-
-            $("#well1").append(buttonWell);
 
             // // this will be used as the DOM storage to be appended to the html
             // var parkNameWell = $("<h2>");
@@ -187,7 +180,10 @@ function Search() {
             // $("#well2").append(descriptionWell);
             $("#accordion").append(displayParkName).append(displayParkDescription);
             $( function() {
-                $( "#accordion" ).accordion();
+                $( "#accordion" ).accordion({
+                    collapsible: true,
+                    active: true
+                });
               } );
     
 
@@ -209,6 +205,11 @@ function Search() {
                 console.log(o);
                 $("#signin").css("display", "none");
                 $(".container" + o).css("display", "block");
+            });
+
+            $(".back").on("click", function () {
+                $("#signin").css("display", "block");
+                $(".container" + o).css("display","none")
             });
 
         });
@@ -342,17 +343,25 @@ function weatherQuery(latitude, longitude) {
             console.log(windspeed);
             console.log(humidity);
             console.log(weatherDescrip);
+
+            var WeatherWell = $("<table>");
+            WeatherWell.addClass("table");
+
+            WeatherWell.append(
+                "<thead><tr><th scope='col'>Temperature</th><th scope='col'>Wind Speed</th><th scope='col'>Humidity</th><th scope='col'>Weather Description</th></tr></thead>" + 
+                "<tbody><tr><td>"+ WeatherTemperature[b] +"F</td><td>"+  WeatherWind[b] +"mph</td><td>"+ WeatherHumidity[b] +"%</td><td>"+ WeatherDescription[b] +"</td></tr></tbody>"
+            )
             
 
-            var WeatherWell = $("<p>");
+            // var WeatherWell = $("<p>");
 
-            WeatherWell.append("<br><br> Temperature : " + WeatherTemperature[b] + "F");
+            // WeatherWell.append("<br><br> Temperature : " + WeatherTemperature[b] + "F");
 
-            WeatherWell.append("<br><br> Wind Speed : " + WeatherWind[b] + "mph");
+            // WeatherWell.append("<br><br> Wind Speed : " + WeatherWind[b] + "mph");
 
-            WeatherWell.append("<br><br> Humidity : " + WeatherHumidity[b] + "%");
+            // WeatherWell.append("<br><br> Humidity : " + WeatherHumidity[b] + "%");
 
-            WeatherWell.append("<br><br> Weather Description : " + WeatherDescription[b]);
+            // WeatherWell.append("<br><br> Weather Description : " + WeatherDescription[b]);
 
             $("#weather" + b).append(WeatherWell);
 
