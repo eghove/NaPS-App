@@ -29,3 +29,10 @@ body{
 .login-text {
     color: black;
 }
+
+/*for the faux-links in the main results page*/
+.faux-link {
+    text-decoration: underline;
+    
+    color: blue;
+}
