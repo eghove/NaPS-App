@@ -136,7 +136,7 @@ function Search() {
             // first storing name of park
 
             parkInfoWell.addClass("container" + j);
-            // parkInfoWell.css("display", "none")
+            
             parkInfoWell.append(
                 "<div class = 'container'><div class = 'row'><div class = 'col-md-12'><div class='card'"
                 + " style='background-color: rgb(250, 248, 248, 0.7); margin-top: 20px'><div class ='card-body'><h1>"
@@ -145,7 +145,7 @@ function Search() {
             );
 
             parkInfoWell.css("text-align", "center");
-
+          
             $("#MainContent").append(parkInfoWell);
 
 
@@ -163,7 +163,7 @@ function Search() {
             var displayParkName=$("<h3>" + ParkNames[j] + "</h3>");
             
             //created a faux link    
-            var displayParkDescription=$("<div><p>" + ParkDescription[j] + "</p><p class='faux-link'>Click to Learn More!</p></div>");
+            var displayParkDescription=$("<div><p>" + ParkDescription[j] + "</p><p class='faux-link' style='cursor:pointer'>Click to Learn More!</p></div>");
             //apending the necessary classes and values for the secondary results function to run
             displayParkDescription.addClass("button");
             displayParkDescription.attr("value", j);
@@ -188,6 +188,8 @@ function Search() {
         NASAImagePush();
         WeatherInfoPush();
         camping();
+
+
 
 
 
