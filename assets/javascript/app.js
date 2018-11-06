@@ -92,14 +92,8 @@ $(document).ready(function () {
         Search();
 
     });
-
-
-<<<<<<< HEAD
-=======
-        Search();
        
     
->>>>>>> master
 
 });
 
@@ -137,7 +131,6 @@ function Search() {
             //push the latitude and longitude string from the above response into latLongParkData array
             latLongParkData.push(ParkData[j].latLong);
 
-<<<<<<< HEAD
             // this will be used as the DOM storage to be appended to the html
             var parkInfoWell = $("<div>");
             // first storing name of park
@@ -172,7 +165,6 @@ function Search() {
 
             $("#well1").append(buttonWell);
 
-=======
             // // this will be used as the DOM storage to be appended to the html
             // var parkNameWell = $("<h2>");
             // // first storing name of park
@@ -183,7 +175,6 @@ function Search() {
             // descriptionWell.append(ParkData[j].description);
 
             // append them to the html
->>>>>>> master
 
             //Putting the accordions on the Page
             var displayParkName=$("<h3>" + ParkNames[j] + "</h3>");
@@ -351,6 +342,7 @@ function weatherQuery(latitude, longitude) {
             console.log(windspeed);
             console.log(humidity);
             console.log(weatherDescrip);
+            
 
             var WeatherWell = $("<p>");
 
