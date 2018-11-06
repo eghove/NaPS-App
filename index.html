@@ -6,6 +6,8 @@
     <title>National Park Statistic App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
+    <!--Firebase-->
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
     <!--Moved JQuery before the site's javascript link-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk="
@@ -55,6 +57,7 @@
                             <label for="searchBox">Search Bar</label>
                             <input type="text" class="form-control" id="searchBox">
                             <button type="button" class="btn btn-default btn-sm" id="Search">Search</button>
+                            <button type="button" class="btn btn-default btn-sm" id="Logout">Logout</button>
                         </form>
                         <div id="accordion">
                                 <!-- <h3>Section 1</h3>
@@ -123,7 +126,7 @@
         </div>
     </div>
 
-
+<script src="assets/javascript/firebase.js"></script>
 </body>
 
 </html>

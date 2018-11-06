@@ -24,3 +24,8 @@ body{
 #signin{
     background-color: rgb(250, 248, 248, 0.7);
 }
+
+/*styling the login banner text */
+.login-text {
+    color: black;
+}
