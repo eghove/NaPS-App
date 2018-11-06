@@ -9,6 +9,8 @@ var nasalat;
 var nasalon;
 var z = 0;
 var b = 0;
+var y = 0;
+var o;
 var weatherlat;
 var weatherlon;
 
@@ -60,6 +62,7 @@ $(document).ready(function () {
         nasalon = [];
         z = 0;
         b = 0;
+        y = 0;
         weatherlat = [];
         weatherlon = [];
 
@@ -84,17 +87,14 @@ $(document).ready(function () {
         WeatherHumidity = [];
         WeatherDescription = [];
 
-        $("#well1").empty();
-        $("#well2").empty();
-        $("#well3").empty();
-        $("#well4").empty();
-        $("#well5").empty();
+        $("#MainContent").empty();
 
         Search();
+
+    });
        
     
 
-    })
 });
 
 //FUNCTIONS
@@ -131,6 +131,40 @@ function Search() {
             //push the latitude and longitude string from the above response into latLongParkData array
             latLongParkData.push(ParkData[j].latLong);
 
+            // this will be used as the DOM storage to be appended to the html
+            var parkInfoWell = $("<div>");
+            // first storing name of park
+
+            parkInfoWell.addClass("container" + j);
+            // parkInfoWell.css("display", "none")
+            parkInfoWell.append(
+                "<div class = 'container'><div class = 'row'><div class = 'col-md-12'><div class='card'"
+                + " style='background-color: rgb(250, 248, 248, 0.7); margin-top: 20px'><div class ='card-body'><h1>"
+                + ParkData[j].fullName + "</h1><br><br><p>" + ParkData[j].description + "</p><br><br><div id='img" + j
+                + "'></div><br><br><div id='weather" + j + "'></div><div class = 'accordions" + j + "'>" + "</div></div></div></div></div></div></div>"
+            );
+
+            parkInfoWell.css("text-align", "center");
+
+            $("#MainContent").append(parkInfoWell);
+
+
+
+            var parkNameWell = $("<h2>");
+
+            parkNameWell.append(ParkData[j].fullName);
+            // second well for description
+            var descriptionWell = $("<h4>");
+            // then storing the description of the park
+            descriptionWell.append(ParkData[j].description);
+
+            var buttonWell = $("<button>");
+            buttonWell.addClass("button");
+            buttonWell.attr("value", j);
+            buttonWell.append("<p>Go</p>")
+
+            $("#well1").append(buttonWell);
+
             // // this will be used as the DOM storage to be appended to the html
             // var parkNameWell = $("<h2>");
             // // first storing name of park
@@ -164,10 +198,20 @@ function Search() {
         latLongParser();
         //push the NASA images to NASA Images Array
         NASAImagePush();
-        camping();
         WeatherInfoPush();
+        camping();
 
 
+
+        $(document).ready(function () {
+            $(".button").on("click", function () {
+                o = this.value;
+                console.log(o);
+                $("#signin").css("display", "none");
+                $(".container" + o).css("display", "block");
+            });
+
+        });
 
     });
 
@@ -175,15 +219,6 @@ function Search() {
     console.log(latLongParkData);
 
 };
-
-// function print() {
-//     for (var q = 0; q < NASAImages.length; q++) {
-
-//         // third well for images
-
-//     }
-
-// }
 
 function camping() {
     console.log("hi");
@@ -198,56 +233,59 @@ function camping() {
             console.log(campData);
 
 
+            if (campData.length === 0) {
+                $(".accordions" + y).append("<h3>No Campgrounds Found</h3>")
+            } else {
 
-            for (var c = 0; c < campData.length; c++) {
-                CampsiteNames.push(campData[c].name);
-                CampsiteDescription.push(campData[c].description);
-                CampsiteDirections.push(campData[c].directionsUrl);
-                CampsiteWeather.push(campData[c].weatherOverview);
-                CampsiteWater.push(campData[c].amenities.potableWater[0]);
-                CampsiteToilets.push(campData[c].amenities.toilets[0]);
-                CampsiteShowers.push(campData[c].amenities.showers[0]);
-                console.log(CampsiteNames);
+                for (var c = 0; c < campData.length; c++) {
+                    CampsiteNames.push(campData[c].name);
+                    CampsiteDescription.push(campData[c].description);
+                    CampsiteDirections.push(campData[c].directionsUrl);
+                    CampsiteWeather.push(campData[c].weatherOverview);
+                    CampsiteWater.push(campData[c].amenities.potableWater[0]);
+                    CampsiteToilets.push(campData[c].amenities.toilets[0]);
+                    CampsiteShowers.push(campData[c].amenities.showers[0]);
+                    console.log(CampsiteNames);
 
-
-                for (var v = 0; v < CampsiteNames.length; v++) {
-                    var campsiteNameWell = $("<h4>");
-
-                    campsiteNameWell.append(CampsiteNames[v]);
-
-                    var campsiteInfoWell = $("<p>");
-
-                    campsiteInfoWell.append("<br><br>" + "Description : " + CampsiteDescription[v])
-
-                    campsiteInfoWell.append("<br><br>" + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>");
-
-                    campsiteInfoWell.append("<br><br>" + "Weather Overview : " + CampsiteWeather[v]);
-
-                    campsiteInfoWell.append("<br><br>" + "Potable Water : " + CampsiteWater[v]);
-
-                    campsiteInfoWell.append("<br><br>" + "Toilets : " + CampsiteToilets[v]);
-
-                    campsiteInfoWell.append("<br><br>" + "Showers : " + CampsiteShowers[v]);
-
-                    $("#well4").append(campsiteNameWell);
-                    $("#well4").append(campsiteInfoWell);
+                    var campsiteInfoWell = $("<div>");
+                    campsiteInfoWell.addClass("accordion")
 
 
+                    for (var v = 0; v < CampsiteNames.length; v++) {
+
+                        campsiteInfoWell.append(
+                            "<h3>" + CampsiteNames[v] + "</h3><div><p>" + "Description : " + CampsiteDescription[v] + "</p>"
+                            + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>" + "<p>"
+                            + "Weather Overview : " + CampsiteWeather[v] + "</p><p>" + "Potable Water : "
+                            + CampsiteWater[v] + "</p><p>" + "Toilets : " + CampsiteToilets[v] + "</p><p>"
+                            + "Showers : " + CampsiteShowers[v] + "</p></div>"
+                        )
+
+                        $(".accordions" + y).append(campsiteInfoWell);
+
+
+
+
+
+                    }
+                    CampsiteNames = [];
+                    CampsiteDescription = [];
+                    CampsiteDirections = [];
+                    CampsiteWeather = [];
+                    CampsiteWater = [];
+                    CampsiteToilets = [];
+                    CampsiteShowers = [];
+                    $(".accordion").accordion({
+                        collapsible: true,
+                        active: true
+                    });
                 }
-                CampsiteNames = [];
-                CampsiteDescription = [];
-                CampsiteDirections = [];
-                CampsiteWeather = [];
-                CampsiteWater = [];
-                CampsiteToilets = [];
-                CampsiteShowers = [];
             }
+
+            y++
+
         });
     };
-
-    // for (var q = 0; q < campsiteObjects.length; q++) {
-
-    // }
 };
 
 
@@ -304,6 +342,7 @@ function weatherQuery(latitude, longitude) {
             console.log(windspeed);
             console.log(humidity);
             console.log(weatherDescrip);
+            
 
             var WeatherWell = $("<p>");
 
@@ -315,7 +354,7 @@ function weatherQuery(latitude, longitude) {
 
             WeatherWell.append("<br><br> Weather Description : " + WeatherDescription[b]);
 
-            $("#well5").append(WeatherWell);
+            $("#weather" + b).append(WeatherWell);
 
             b++;
 
@@ -351,7 +390,7 @@ function NASAQuery(latitude, longitude) {
             //used this console to make sure real images and fail images are showing up in the rigth places
             //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
 
-            $("#well3").append(imageWell);
+            $("#img" + z).append(imageWell);
             //console.log(imageWell);
 
             z++;
@@ -359,7 +398,7 @@ function NASAQuery(latitude, longitude) {
         })
         .fail(function (error) {
             //set up default image
-            let defaultImageUrl= 'https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image';
+            let defaultImageUrl = 'https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image';
             //push the link to the default image to NASAImages array
             NASAImages.push(defaultImageUrl);
 
@@ -370,7 +409,7 @@ function NASAQuery(latitude, longitude) {
             //used this console to make sure real images and fail images are showing up in the rigth places
             //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
 
-            $("#well3").append(imageWell);
+            $("#img" + z).append(imageWell);
             //console.log(imageWell);
 
             z++;
