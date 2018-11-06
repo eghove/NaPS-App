@@ -8,7 +8,12 @@
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
     <!--Moved JQuery before the site's javascript link-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
     <script src="./assets/javascript/app.js"></script>
+
 
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
@@ -36,7 +41,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <!-- <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="card" id="signin">
@@ -49,32 +54,116 @@
                             <br>
                             <br>
                             <button type="button" class="btn btn-success">Submit</button>
-                            <form>
-                                <label for="searchBox">Search Bar</label>
-                                <input type="text" class="form-control" id="searchBox">
-                                <button type="button" class="btn btn-default btn-sm" id="Search">Search</button>
-                            </form>
-                            <div id = "well1">
-    
+                            <br>
+                            <br>
+                            <nav class="navbar navbar-light bg-light">
+                                <form>
+                                    <label for="searchBox">Park Keywords</label>
+                                    <input type="text" class="form-control" id="searchBox">
+                                    <button type="button" class="btn btn-success btn-sm" id="Search">Search</button>
+                                </form>
+                            </nav> -->
+
+
+                            <!-- <div id="well1">
+
                             </div>
-                            <div id = "well2">
-    
+                            <div id="well2">
                             </div>
-                            <div id = "well3">
-    
+                            <div id="well3">
+
                             </div>
-                            <div id = "well4">
-                                
-                            </div>
-                        </form>
+                            <div id="well4"> -->
+
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    
+    </div>
 
-    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="card" id="signin">
+                            <div class="card-body">
+                                <form>
+                                    <label for="username1">User Name:</label>
+                                    <input type="text" id="username1" class="form-control">
+                                    <label for="userpassword1">Password:</label>
+                                    <input type="text" id="userpassword1" class="form-control">
+                                    <br>
+                                    <br>
+                                    <button type="button" class="btn btn-success">Submit</button>
+                                    <br>
+                                    <br>
+                                    <nav class="navbar navbar-light bg-light">
+                                        <form>
+                                            <label for="searchBox">Park Keywords</label>
+                                            <input type="text" class="form-control" id="searchBox">
+                                            <button type="button" class="btn btn-success btn-sm" id="Search">Search</button>
+                                        </form>
+                                    </nav>
+        
+        
+                                    <!-- <div id="well1">
+        
+                                    </div>
+                                    <div id="well2">
+                                    </div>
+                                    <div id="well3">
+        
+                                    </div>
+                                    <div id="well4"> -->
+        
+                            </div>
+                            </form>
+                        </div>
+                <div class="accordion" id="accordionOne">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordionOne" aria-expanded="true" aria-controls="#accordionOne">
+                                National Parks Results Start:
+                            </button>
+                            <span id="well1"></span>
+
+
+                        </div>
+                    </div>
+                    <div id="collapseOne" class="collapse show"  aria-labelledby="headingOne" data-parent="accordionOne">
+                        <div class="card-body">
+                            <span id="well2"></span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="accordion" id="accordionTwo">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordionOne" aria-expanded="true" aria-controls="#accordionOne">
+                                National Parks Results End
+                            </button>
+                            <span id="well1"></span>
+
+
+                        </div>
+                    </div>
+                    <div id="collapseOne" class="collapse show"  aria-labelledby="headingOne" data-parent="accordionOne">
+                        <div class="card-body">
+                            <span id="well2"></span>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 </body>

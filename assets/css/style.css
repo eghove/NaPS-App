@@ -15,10 +15,19 @@ body{
     background-repeat: vertical;
     background-size: cover;
     height: 100vh;
+    background-attachment: fixed;
     
    
 }
 
 #signin{
     background-color: rgb(250, 248, 248, 0.7);
+}
+
+.card-header{
+    background-color:rgb(250,248, 248, 0.7);
+}
+
+.card-body{
+    background-color:rgb(250,248, 248, 0.7);
 }
