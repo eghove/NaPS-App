@@ -10,6 +10,7 @@ var nasalon;
 var z = 0;
 var b = 0;
 var y = 0;
+var o;
 var weatherlat;
 var weatherlon;
 
@@ -80,15 +81,14 @@ $(document).ready(function () {
         WeatherHumidity = [];
         WeatherDescription = [];
 
-        $("#well1").empty();
-        $("#well2").empty();
-        $("#well3").empty();
-        $("#well4").empty();
-        $("#well5").empty();
+        $("#MainContent").empty();
 
-        Search()
+        Search();
 
-    })
+    });
+
+
+
 });
 
 //FUNCTIONS
@@ -129,18 +129,16 @@ function Search() {
             var parkInfoWell = $("<div>");
             // first storing name of park
 
-            parkInfoWell.addClass("conatiner" + j);
+            parkInfoWell.addClass("container" + j);
+            // parkInfoWell.css("display", "none")
             parkInfoWell.append(
-                "<div class = 'container'><div class = 'row'><div class = 'col-md-12'><h1>" + ParkData[j].fullName
-                + "</h1><br><br><p>" + ParkData[j].description + "</p>" + "<div id='img" + j
-                + "'><br><br></div><div class = 'accordions" + j + "'>" + "<div id='weather" + y + "'></div></div></div></div></div>"
+                "<div class = 'container'><div class = 'row'><div class = 'col-md-12'><div class='card'"
+                + " style='background-color: rgb(250, 248, 248, 0.7); margin-top: 20px'><div class ='card-body'><h1>"
+                + ParkData[j].fullName + "</h1><br><br><p>" + ParkData[j].description + "</p><br><br><div id='img" + j
+                + "'></div><br><br><div id='weather" + j + "'></div><div class = 'accordions" + j + "'>" + "</div></div></div></div></div></div></div>"
             );
 
             parkInfoWell.css("text-align", "center");
-            parkInfoWell.css("margin-top", "20px");
-            parkInfoWell.css("padding-top", "-20px");
-            parkInfoWell.css("margin-bottom", "20px");
-            parkInfoWell.css("background-color", "rgb(250, 248, 248, 0.7)");
 
             $("#MainContent").append(parkInfoWell);
 
@@ -153,6 +151,13 @@ function Search() {
             var descriptionWell = $("<h4>");
             // then storing the description of the park
             descriptionWell.append(ParkData[j].description);
+
+            var buttonWell = $("<button>");
+            buttonWell.addClass("button");
+            buttonWell.attr("value", j);
+            buttonWell.append("<p>Go</p>")
+
+            $("#well1").append(buttonWell);
 
 
 
@@ -167,10 +172,20 @@ function Search() {
         latLongParser();
         //push the NASA images to NASA Images Array
         NASAImagePush();
-        camping();
         WeatherInfoPush();
+        camping();
 
 
+
+        $(document).ready(function () {
+            $(".button").on("click", function () {
+                o = this.value;
+                console.log(o);
+                $("#signin").css("display", "none");
+                $(".container" + o).css("display", "block");
+            });
+
+        });
 
     });
 
@@ -178,15 +193,6 @@ function Search() {
     console.log(latLongParkData);
 
 };
-
-// function print() {
-//     for (var q = 0; q < NASAImages.length; q++) {
-
-//         // third well for images
-
-//     }
-
-// }
 
 function camping() {
     console.log("hi");
@@ -202,7 +208,7 @@ function camping() {
 
 
             if (campData.length === 0) {
-                $(".accordions" + y).append("<h1>No Campgrounds Found</h1>")
+                $(".accordions" + y).append("<h3>No Campgrounds Found</h3>")
             } else {
 
                 for (var c = 0; c < campData.length; c++) {
@@ -215,33 +221,24 @@ function camping() {
                     CampsiteShowers.push(campData[c].amenities.showers[0]);
                     console.log(CampsiteNames);
 
+                    var campsiteInfoWell = $("<div>");
+                    campsiteInfoWell.addClass("accordion")
+
 
                     for (var v = 0; v < CampsiteNames.length; v++) {
 
-                        var campsiteInfoWell = $("<div>");
-                        campsiteInfoWell.addClass("accordion" + y)
-
                         campsiteInfoWell.append(
-                            "<h3>" + CampsiteNames[v] + "</h3><br><br><p>" + "Description : " + CampsiteDescription[v] + "</p><br><br>"
-                            + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>" + "<br><br><p>"
-                            + "Weather Overview : " + CampsiteWeather[v] + "</p><br><br><p>" + "Potable Water : "
-                            + CampsiteWater[v] + "</p><br><br><p>" + "Toilets : " + CampsiteToilets[v] + "</p><br><br><p>"
-                            + "Showers : " + CampsiteShowers[v] + "</p>"
+                            "<h3>" + CampsiteNames[v] + "</h3><div><p>" + "Description : " + CampsiteDescription[v] + "</p>"
+                            + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>" + "<p>"
+                            + "Weather Overview : " + CampsiteWeather[v] + "</p><p>" + "Potable Water : "
+                            + CampsiteWater[v] + "</p><p>" + "Toilets : " + CampsiteToilets[v] + "</p><p>"
+                            + "Showers : " + CampsiteShowers[v] + "</p></div>"
                         )
-
-                        // campsiteInfoWell.append("<br><br>" + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>");
-
-                        // campsiteInfoWell.append("<br><br>" + "Weather Overview : " + CampsiteWeather[v]);
-
-                        // campsiteInfoWell.append("<br><br>" + "Potable Water : " + CampsiteWater[v]);
-
-                        // campsiteInfoWell.append("<br><br>" + "Toilets : " + CampsiteToilets[v]);
-
-                        // campsiteInfoWell.append("<br><br>" + "Showers : " + CampsiteShowers[v]);
 
                         $(".accordions" + y).append(campsiteInfoWell);
 
-                        $(".accordion" + y).accordion()
+
+
 
 
                     }
@@ -252,15 +249,17 @@ function camping() {
                     CampsiteWater = [];
                     CampsiteToilets = [];
                     CampsiteShowers = [];
+                    $(".accordion").accordion({
+                        collapsible: true,
+                        active: true
+                    });
                 }
             }
+
             y++
+
         });
     };
-
-    // for (var q = 0; q < campsiteObjects.length; q++) {
-
-    // }
 };
 
 
