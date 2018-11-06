@@ -45,6 +45,12 @@ var WeatherDescription = [];
 //EVENT LISTENERS
 // ==============================================================
 $(document).ready(function () {
+    //checks to see if the user is authenticated
+    authUserCheck();
+    //on click listener for the logout button
+    $('#Logout').on("click", function() {
+        logOut();
+    });
     $("#Search").on("click", function (event) {
         event.preventDefault();
 
@@ -88,6 +94,12 @@ $(document).ready(function () {
     });
 
 
+<<<<<<< HEAD
+=======
+        Search();
+       
+    
+>>>>>>> master
 
 });
 
@@ -125,6 +137,7 @@ function Search() {
             //push the latitude and longitude string from the above response into latLongParkData array
             latLongParkData.push(ParkData[j].latLong);
 
+<<<<<<< HEAD
             // this will be used as the DOM storage to be appended to the html
             var parkInfoWell = $("<div>");
             // first storing name of park
@@ -159,11 +172,33 @@ function Search() {
 
             $("#well1").append(buttonWell);
 
-
+=======
+            // // this will be used as the DOM storage to be appended to the html
+            // var parkNameWell = $("<h2>");
+            // // first storing name of park
+            // parkNameWell.append(ParkData[j].fullName);
+            // // second well for description
+            // var descriptionWell = $("<h4>");
+            // // then storing the description of the park
+            // descriptionWell.append(ParkData[j].description);
 
             // append them to the html
-            $("#well1").append(parkNameWell);
-            $("#well2").append(descriptionWell);
+>>>>>>> master
+
+            //Putting the accordions on the Page
+            var displayParkName=$("<h3>" + ParkNames[j] + "</h3>");
+
+            var displayParkDescription=$("<div><p>" + ParkDescription[j] +  "</p></div>");
+           
+            
+            
+            // $("#well1").append(parkNameWell);
+            // $("#well2").append(descriptionWell);
+            $("#accordion").append(displayParkName).append(displayParkDescription);
+            $( function() {
+                $( "#accordion" ).accordion();
+              } );
+    
 
 
 
@@ -430,6 +465,28 @@ function NASAImagePush() {
     console.log(NASAImages);
 }
 
+//the function that will re-direct the user back to the login page if an account has not yet been created (self-invoking)
+function authUserCheck() {
+    var firebase = app_fireBase;
+    var uid=null;
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is signed in.
+          uid = user.uid;
+        } else {
+            //redirect to login page
+            uid = null;
+            window.location.replace("login.html");
+        }
+      });
+
+      
+};
+//logs the user out
+function logOut () {
+    firebase.auth().signOut();
+};
+
 function WeatherInfoPush() {
     for (let p = 0; p < latLongParkData.length; p++) {
         weatherlat = latLongParkData[p][0];
@@ -441,8 +498,7 @@ function WeatherInfoPush() {
     console.log(nasalat)
     console.log(nasalon)
     console.log(NASAImages);
-}
+};
  //MAIN PROCESSES
  //===============================================================
-
-
+ 
