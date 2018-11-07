@@ -48,7 +48,7 @@ $(document).ready(function () {
     //checks to see if the user is authenticated
     authUserCheck();
     //on click listener for the logout button
-    $('#Logout').on("click", function() {
+    $('#Logout').on("click", function () {
         logOut();
     });
     $("#Search").on("click", function (event) {
@@ -92,8 +92,8 @@ $(document).ready(function () {
         Search();
 
     });
-       
-    
+
+
 
 });
 
@@ -136,7 +136,7 @@ function Search() {
             // first storing name of park
 
             parkInfoWell.addClass("container" + j);
-            
+            parkInfoWell.css("display", "none");
             parkInfoWell.append(
                 "<div class = 'container'><div class = 'row'><div class = 'col-md-12'><div class='card'"
                 + " style='background-color: rgb(250, 248, 248, 0.7); margin-top: 20px'><div class ='card-body'><h1>"
@@ -145,7 +145,7 @@ function Search() {
             );
 
             parkInfoWell.css("text-align", "center");
-          
+
             $("#MainContent").append(parkInfoWell);
 
 
@@ -158,26 +158,33 @@ function Search() {
             // then storing the description of the park
             descriptionWell.append(ParkData[j].description);
 
-            
-            
-            var displayParkName=$("<h3>" + ParkNames[j] + "</h3>");
-            
+
+
+            var displayParkName = $("<h3>" + ParkNames[j] + "</h3>");
+
             //created a faux link    
-            var displayParkDescription=$("<div><p>" + ParkDescription[j] + "</p><p class='faux-link' style='cursor:pointer'>Click to Learn More!</p></div>");
+            var displayParkDescription = $("<div><p>" + ParkDescription[j] + "</p><div id='secondbutton" + j + "'></div></div>");
             //apending the necessary classes and values for the secondary results function to run
-            displayParkDescription.addClass("button");
-            displayParkDescription.attr("value", j);
-           
-            
+
+
+
+
+            // <p class='button faux-link' style='cursor:pointer' value=" + j + ">Click to Learn More!</p>
             //appending everything to the accordion and invoking the accordion function
             $("#accordion").append(displayParkName).append(displayParkDescription)
-            $( function() {
-                $( "#accordion" ).accordion({
+            $(function () {
+                $("#accordion").accordion({
                     collapsible: true,
                     active: true
                 });
-              } );
-    
+            });
+
+            var Buttons = $("<button>");
+            Buttons.addClass("button");
+            Buttons.attr("value", j);
+            Buttons.append("Click Here For More Information");
+
+            $("#secondbutton" + j).append(Buttons);
 
 
 
@@ -195,15 +202,15 @@ function Search() {
 
         $(document).ready(function () {
             $(".button").on("click", function () {
+                console.log(this.value);
                 o = this.value;
-                console.log(o);
                 $("#signin").css("display", "none");
                 $(".container" + o).css("display", "block");
             });
 
             $(".back").on("click", function () {
                 $("#signin").css("display", "block");
-                $(".container" + o).css("display","none")
+                $(".container" + o).css("display", "none")
             });
 
         });
@@ -342,10 +349,10 @@ function weatherQuery(latitude, longitude) {
             WeatherWell.addClass("table");
 
             WeatherWell.append(
-                "<thead><tr><th scope='col'>Temperature</th><th scope='col'>Wind Speed</th><th scope='col'>Humidity</th><th scope='col'>Weather Description</th></tr></thead>" + 
-                "<tbody><tr><td>"+ WeatherTemperature[b] +"F</td><td>"+  WeatherWind[b] +"mph</td><td>"+ WeatherHumidity[b] +"%</td><td>"+ WeatherDescription[b] +"</td></tr></tbody>"
+                "<thead><tr><th scope='col'>Temperature</th><th scope='col'>Wind Speed</th><th scope='col'>Humidity</th><th scope='col'>Weather Description</th></tr></thead>" +
+                "<tbody><tr><td>" + WeatherTemperature[b] + "F</td><td>" + WeatherWind[b] + "mph</td><td>" + WeatherHumidity[b] + "%</td><td>" + WeatherDescription[b] + "</td></tr></tbody>"
             )
-            
+
 
             // var WeatherWell = $("<p>");
 
@@ -463,22 +470,22 @@ function NASAImagePush() {
 //the function that will re-direct the user back to the login page if an account has not yet been created (self-invoking)
 function authUserCheck() {
     var firebase = app_fireBase;
-    var uid=null;
-    firebase.auth().onAuthStateChanged(function(user) {
+    var uid = null;
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-          // User is signed in.
-          uid = user.uid;
+            // User is signed in.
+            uid = user.uid;
         } else {
             //redirect to login page
             uid = null;
             window.location.replace("login.html");
         }
-      });
+    });
 
-      
+
 };
 //logs the user out
-function logOut () {
+function logOut() {
     firebase.auth().signOut();
 };
 
@@ -496,4 +503,4 @@ function WeatherInfoPush() {
 };
  //MAIN PROCESSES
  //===============================================================
- 
+
