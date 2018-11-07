@@ -279,7 +279,9 @@ function camping() {
                     CampsiteShowers = [];
                     $(".accordion").accordion({
                         collapsible: true,
-                        active: true
+                        active: true,
+                        //makes the accordions expand
+                        heightStyle: "content",
                     });
                 }
             }
