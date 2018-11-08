@@ -281,6 +281,11 @@ function camping() {
                     $(".accordion").accordion({
                         collapsible: true,
                         active: true,
+<<<<<<< HEAD
+=======
+                        //makes the accordions expand
+                        heightStyle: "content",
+>>>>>>> master
                     });
                 }
             }
