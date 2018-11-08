@@ -1,6 +1,7 @@
 //GLOBAL VARIABLES
 //===============================================================
 // url array for campsite info
+var campURLarray = [];
 var campURL = [];
 
 var npsSearch;
@@ -45,6 +46,11 @@ var WeatherDescription = [];
 //EVENT LISTENERS
 // ==============================================================
 $(document).ready(function () {
+    $("#accordion").accordion({
+        collapsible: true,
+        active: true
+    });
+    console.log('ready')
     //checks to see if the user is authenticated
     authUserCheck();
     //on click listener for the logout button
@@ -53,7 +59,10 @@ $(document).ready(function () {
     });
     $("#Search").on("click", function (event) {
         event.preventDefault();
+        $("#MainContent").empty();
+        $("#accordion").empty();
 
+        campURLarray = [];
         campURL = [];
 
         npsSearch = "";
@@ -62,7 +71,7 @@ $(document).ready(function () {
         nasalon = [];
         z = 0;
         b = 0;
-        y = 0;
+        o = "";
         weatherlat = [];
         weatherlon = [];
 
@@ -87,7 +96,7 @@ $(document).ready(function () {
         WeatherHumidity = [];
         WeatherDescription = [];
 
-        $("#MainContent").empty();
+
 
         Search();
 
@@ -103,6 +112,9 @@ $(document).ready(function () {
 
 // this function will tell all of the ajax what information to look up and will also reset the arrays each time it runs.
 function Search() {
+            
+    $("#accordion").accordion("destroy")
+
     // this will catch the url for the campsites that will be passed into the campground ajax.
     // campURL = [];
 
@@ -124,7 +136,7 @@ function Search() {
         // for loop to gather all relevant peices of info from the api and store them in arrays 
         for (var j = 0; j < ParkData.length; j++) {
             // campsite url, park names, and descriptions array push is done here
-            campURL.push("https://developer.nps.gov/api/v1/campgrounds?q=" + ParkData[j].fullName + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc");
+            campURLarray.push("https://developer.nps.gov/api/v1/campgrounds?q=" + ParkData[j].fullName + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc");
             ParkNames.push(ParkData[j].fullName);
             ParkDescription.push(ParkData[j].description);
 
@@ -149,17 +161,6 @@ function Search() {
             $("#MainContent").append(parkInfoWell);
 
 
-
-            var parkNameWell = $("<h2>");
-
-            parkNameWell.append(ParkData[j].fullName);
-            // second well for description
-            var descriptionWell = $("<h4>");
-            // then storing the description of the park
-            descriptionWell.append(ParkData[j].description);
-
-
-
             var displayParkName = $("<h3>" + ParkNames[j] + "</h3>");
 
             //created a faux link    
@@ -167,12 +168,10 @@ function Search() {
             //apending the necessary classes and values for the secondary results function to run
 
 
-
-
-            // <p class='button faux-link' style='cursor:pointer' value=" + j + ">Click to Learn More!</p>
             //appending everything to the accordion and invoking the accordion function
             $("#accordion").append(displayParkName).append(displayParkDescription)
             $(function () {
+                console.log("accordion")
                 $("#accordion").accordion({
                     collapsible: true,
                     active: true
@@ -194,18 +193,21 @@ function Search() {
         //push the NASA images to NASA Images Array
         NASAImagePush();
         WeatherInfoPush();
-        camping();
+
 
 
 
 
 
         $(document).ready(function () {
+            
             $(".button").on("click", function () {
                 console.log(this.value);
                 o = this.value;
                 $("#signin").css("display", "none");
                 $(".container" + o).css("display", "block");
+                campURL = campURLarray[o];
+                camping();
             });
 
             $(".back").on("click", function () {
@@ -225,18 +227,16 @@ function Search() {
 function camping() {
     console.log("hi");
 
-    for (var i = 0; i < campURL.length; i++) {
-
         $.ajax({
-            url: campURL[i],
+            url: campURL,
             method: "GET"
         }).then(function (response) {
             var campData = response.data;
-            console.log(campData);
+            console.log("campdata:", campData);
 
 
             if (campData.length === 0) {
-                $(".accordions" + y).append("<h3>No Campgrounds Found</h3>")
+                $(".accordions" + o).append("<h3>No Campgrounds Found</h3>")
             } else {
 
                 for (var c = 0; c < campData.length; c++) {
@@ -257,13 +257,14 @@ function camping() {
 
                         campsiteInfoWell.append(
                             "<h3>" + CampsiteNames[v] + "</h3><div><p>" + "Description : " + CampsiteDescription[v] + "</p>"
-                            + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>" + "<p>"
+                            + "<a href=" + CampsiteDirections[v] + " target='_blank'>" + "Directions" + "</a>" + "<p>"
                             + "Weather Overview : " + CampsiteWeather[v] + "</p><p>" + "Potable Water : "
                             + CampsiteWater[v] + "</p><p>" + "Toilets : " + CampsiteToilets[v] + "</p><p>"
                             + "Showers : " + CampsiteShowers[v] + "</p></div>"
                         )
-
-                        $(".accordions" + y).append(campsiteInfoWell);
+                            console.log("append camps")
+                     
+                        $(".accordions" + o).append(campsiteInfoWell);
 
 
 
@@ -286,10 +287,7 @@ function camping() {
                 }
             }
 
-            y++
-
         });
-    };
 };
 
 
