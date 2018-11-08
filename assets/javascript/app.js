@@ -97,8 +97,14 @@ $(document).ready(function () {
         WeatherDescription = [];
 
 
-
-        Search();
+        //prevents from searching an empty string
+        if($('#searchBox').val() == ''){
+                return false;
+            } else {
+                Search();
+            }
+        
+        
 
     });
 
