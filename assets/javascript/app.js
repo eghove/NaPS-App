@@ -97,8 +97,14 @@ $(document).ready(function () {
         WeatherDescription = [];
 
 
-
-        Search();
+        //prevents from searching an empty string
+        if($('#searchBox').val() == ''){
+                return false;
+            } else {
+                Search();
+            }
+        
+        
 
     });
 
@@ -218,6 +224,8 @@ function favSearch() {
                 $("#signin").css("display", "block");
                 $("#favoritesBox").css("display", "block");
                 $(".container" + o).css("display", "none")
+                $(".container" + o).css("display", "none");
+                $(".accordions" + o).empty();
             });
 
             $(".favButtons").on("click", function () {
