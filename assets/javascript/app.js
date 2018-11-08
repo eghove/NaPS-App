@@ -108,11 +108,194 @@ $(document).ready(function () {
 
 //FUNCTIONS
 //===============================================================
+function favSearch() {
+    $("#accordion").accordion("destroy")
+
+    // this will catch the url for the campsites that will be passed into the campground ajax.
+    // campURL = [];
+
+    // this will pick up the text from the input box
+    npsURL = "https://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
+    console.log(npsURL);
+
+
+
+    // initial ajax to the nps
+    $.ajax({
+        url: npsURL,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        // data retrieved from the park api
+        var ParkData = response.data;
+        // for loop to gather all relevant peices of info from the api and store them in arrays 
+        for (var j = 0; j < ParkData.length; j++) {
+            // campsite url, park names, and descriptions array push is done here
+            campURLarray.push("https://developer.nps.gov/api/v1/campgrounds?q=" + ParkData[j].fullName + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc");
+            ParkNames.push(ParkData[j].fullName);
+            ParkDescription.push(ParkData[j].description);
+
+            //push the latitude and longitude string from the above response into latLongParkData array
+            latLongParkData.push(ParkData[j].latLong);
+
+            // this will be used as the DOM storage to be appended to the html
+            var parkInfoWell = $("<div>");
+            // first storing name of park
+
+            parkInfoWell.addClass("container" + j);
+            parkInfoWell.css("display", "none");
+            parkInfoWell.append(
+                "<div class = 'container'><div class = 'row'><div class = 'col-md-12'><div class='card'"
+                + " style='background-color: rgb(250, 248, 248, 0.7); margin-top: 20px'><div class ='card-body'><h1>"
+                + ParkData[j].fullName + "</h1><br><button class='back btn btn-default btn-sm'>Back</button><br><p>" + ParkData[j].description + "</p><br><br><div id='img" + j
+                + "'></div><br><br><div id='weather" + j + "'></div><div class = 'accordions" + j + "'>" + "</div></div></div></div></div></div></div>"
+            );
+
+            parkInfoWell.css("text-align", "center");
+
+            $("#MainContent").append(parkInfoWell);
+
+
+            var displayParkName = $("<h3>" + ParkNames[j] + "</h3>");
+
+            //created a faux link    
+            var displayParkDescription = $("<div><p>" + ParkDescription[j] + "</p><div id='secondbutton" + j + "'></div></div>");
+            //apending the necessary classes and values for the secondary results function to run
+
+
+            //appending everything to the accordion and invoking the accordion function
+            $("#accordion").append(displayParkName).append(displayParkDescription)
+            $(function () {
+                console.log("accordion")
+                $("#accordion").accordion({
+                    collapsible: true,
+                    active: true
+                });
+            });
+
+            var Buttons = $("<button>");
+            Buttons.addClass("button");
+            Buttons.attr("value", j);
+            Buttons.append("Click Here For More Information");
+
+            var FavButtons = $("<button>");
+            FavButtons.addClass("favButtons");
+            FavButtons.css("margin-left", "10px")
+            FavButtons.attr("value", ParkNames[j]);
+            FavButtons.append("Add This Park to Favorites!");
+
+
+            $("#secondbutton" + j).append(Buttons);
+            $("#secondbutton" + j).append(FavButtons);
+
+
+
+        }
+        //calls the function that parses the latitude and longitude into something the other APIs can use
+        latLongParser();
+        //push the NASA images to NASA Images Array
+        NASAImagePush();
+        WeatherInfoPush();
+
+
+
+
+
+
+        $(document).ready(function () {
+
+            $(".button").on("click", function () {
+                console.log(this.value);
+                o = this.value;
+                $("#signin").css("display", "none");
+                $("#favoritesBox").css("display", "none");
+                $(".container" + o).css("display", "block");
+                campURL = campURLarray[o];
+                camping();
+            });
+
+            $(".back").on("click", function () {
+                $("#signin").css("display", "block");
+                $("#favoritesBox").css("display", "block");
+                $(".container" + o).css("display", "none")
+            });
+
+            $(".favButtons").on("click", function () {
+                console.log(this.value)
+                var favParks = $("<button>");
+                favParks.addClass("favParks");
+                favParks.css("margin", "10px")
+                favParks.attr("value", this.value);
+                favParks.append(this.value);
+
+                $("#favorites").append(favParks);
+                $(".favParks").on("click", function () {
+                    npsSearch = this.value;
+                    $("#MainContent").empty();
+                    $("#accordion").empty();
+
+                    campURLarray = [];
+                    campURL = [];
+            
+                    npsURL = [];
+                    nasalat = [];
+                    nasalon = [];
+                    z = 0;
+                    b = 0;
+                    o = "";
+                    weatherlat = [];
+                    weatherlon = [];
+            
+                    latLongParkData = [];
+            
+                    NASAImages = [];
+            
+                    ParkNames = [];
+                    ParkDescription = [];
+            
+                    CampsiteLocations = [];
+                    CampsiteNames = [];
+                    CampsiteDescription = [];
+                    CampsiteDirections = [];
+                    CampsiteWeather = [];
+                    CampsiteWater = [];
+                    CampsiteToilets = [];
+                    CampsiteShowers = [];
+            
+                    WeatherTemperature = [];
+                    WeatherWind = [];
+                    WeatherHumidity = [];
+                    WeatherDescription = [];
+            
+            
+            
+                    Search();
+
+                });
+            });
+
+            $("#clear").on("click", function () {
+                $("#favorites").empty();
+                
+            });
+
+            
+
+        });
+
+    });
+
+    //console.log(ParkNames);
+    console.log(latLongParkData);
+
+};
+
+
 
 
 // this function will tell all of the ajax what information to look up and will also reset the arrays each time it runs.
 function Search() {
-            
+
     $("#accordion").accordion("destroy")
 
     // this will catch the url for the campsites that will be passed into the campground ajax.
@@ -183,7 +366,15 @@ function Search() {
             Buttons.attr("value", j);
             Buttons.append("Click Here For More Information");
 
+            var FavButtons = $("<button>");
+            FavButtons.addClass("favButtons");
+            FavButtons.css("margin-left", "10px")
+            FavButtons.attr("value", ParkNames[j]);
+            FavButtons.append("Add This Park to Favorites!");
+
+
             $("#secondbutton" + j).append(Buttons);
+            $("#secondbutton" + j).append(FavButtons);
 
 
 
@@ -200,11 +391,12 @@ function Search() {
 
 
         $(document).ready(function () {
-            
+
             $(".button").on("click", function () {
                 console.log(this.value);
                 o = this.value;
                 $("#signin").css("display", "none");
+                $("#favoritesBox").css("display", "none");
                 $(".container" + o).css("display", "block");
                 campURL = campURLarray[o];
                 camping();
@@ -212,8 +404,70 @@ function Search() {
 
             $(".back").on("click", function () {
                 $("#signin").css("display", "block");
+                $("#favoritesBox").css("display", "block");
                 $(".container" + o).css("display", "none")
             });
+
+            $(".favButtons").on("click", function () {
+                console.log(this.value)
+                var favParks = $("<button>");
+                favParks.addClass("favParks");
+                favParks.css("margin", "10px")
+                favParks.attr("value", this.value);
+                favParks.append(this.value);
+
+                $("#favorites").append(favParks);
+                $(".favParks").on("click", function () {
+                    npsSearch = this.value;
+                    $("#MainContent").empty();
+                    $("#accordion").empty();
+
+                    campURLarray = [];
+                    campURL = [];
+            
+                    npsURL = [];
+                    nasalat = [];
+                    nasalon = [];
+                    z = 0;
+                    b = 0;
+                    o = "";
+                    weatherlat = [];
+                    weatherlon = [];
+            
+                    latLongParkData = [];
+            
+                    NASAImages = [];
+            
+                    ParkNames = [];
+                    ParkDescription = [];
+            
+                    CampsiteLocations = [];
+                    CampsiteNames = [];
+                    CampsiteDescription = [];
+                    CampsiteDirections = [];
+                    CampsiteWeather = [];
+                    CampsiteWater = [];
+                    CampsiteToilets = [];
+                    CampsiteShowers = [];
+            
+                    WeatherTemperature = [];
+                    WeatherWind = [];
+                    WeatherHumidity = [];
+                    WeatherDescription = [];
+            
+            
+            
+                    favSearch();
+
+                });
+            });
+
+            $("#clear").on("click", function () {
+                $("#favorites").empty();
+                
+            });
+
+            
 
         });
 
@@ -227,67 +481,67 @@ function Search() {
 function camping() {
     console.log("hi");
 
-        $.ajax({
-            url: campURL,
-            method: "GET"
-        }).then(function (response) {
-            var campData = response.data;
-            console.log("campdata:", campData);
+    $.ajax({
+        url: campURL,
+        method: "GET"
+    }).then(function (response) {
+        var campData = response.data;
+        console.log("campdata:", campData);
 
 
-            if (campData.length === 0) {
-                $(".accordions" + o).append("<h3>No Campgrounds Found</h3>")
-            } else {
+        if (campData.length === 0) {
+            $(".accordions" + o).append("<h3>No Campgrounds Found</h3>")
+        } else {
 
-                for (var c = 0; c < campData.length; c++) {
-                    CampsiteNames.push(campData[c].name);
-                    CampsiteDescription.push(campData[c].description);
-                    CampsiteDirections.push(campData[c].directionsUrl);
-                    CampsiteWeather.push(campData[c].weatherOverview);
-                    CampsiteWater.push(campData[c].amenities.potableWater[0]);
-                    CampsiteToilets.push(campData[c].amenities.toilets[0]);
-                    CampsiteShowers.push(campData[c].amenities.showers[0]);
-                    console.log(CampsiteNames);
+            for (var c = 0; c < campData.length; c++) {
+                CampsiteNames.push(campData[c].name);
+                CampsiteDescription.push(campData[c].description);
+                CampsiteDirections.push(campData[c].directionsUrl);
+                CampsiteWeather.push(campData[c].weatherOverview);
+                CampsiteWater.push(campData[c].amenities.potableWater[0]);
+                CampsiteToilets.push(campData[c].amenities.toilets[0]);
+                CampsiteShowers.push(campData[c].amenities.showers[0]);
+                console.log(CampsiteNames);
 
-                    var campsiteInfoWell = $("<div>");
-                    campsiteInfoWell.addClass("accordion")
-
-
-                    for (var v = 0; v < CampsiteNames.length; v++) {
-
-                        campsiteInfoWell.append(
-                            "<h3>" + CampsiteNames[v] + "</h3><div><p>" + "Description : " + CampsiteDescription[v] + "</p>"
-                            + "<a href=" + CampsiteDirections[v] + " target='_blank'>" + "Directions" + "</a>" + "<p>"
-                            + "Weather Overview : " + CampsiteWeather[v] + "</p><p>" + "Potable Water : "
-                            + CampsiteWater[v] + "</p><p>" + "Toilets : " + CampsiteToilets[v] + "</p><p>"
-                            + "Showers : " + CampsiteShowers[v] + "</p></div>"
-                        )
-                            console.log("append camps")
-                     
-                        $(".accordions" + o).append(campsiteInfoWell);
+                var campsiteInfoWell = $("<div>");
+                campsiteInfoWell.addClass("accordion")
 
 
+                for (var v = 0; v < CampsiteNames.length; v++) {
+
+                    campsiteInfoWell.append(
+                        "<h3>" + CampsiteNames[v] + "</h3><div><p>" + "Description : " + CampsiteDescription[v] + "</p>"
+                        + "<a href=" + CampsiteDirections[v] + " target='_blank'>" + "Directions" + "</a>" + "<p>"
+                        + "Weather Overview : " + CampsiteWeather[v] + "</p><p>" + "Potable Water : "
+                        + CampsiteWater[v] + "</p><p>" + "Toilets : " + CampsiteToilets[v] + "</p><p>"
+                        + "Showers : " + CampsiteShowers[v] + "</p></div>"
+                    )
+                    console.log("append camps")
+
+                    $(".accordions" + o).append(campsiteInfoWell);
 
 
 
-                    }
-                    CampsiteNames = [];
-                    CampsiteDescription = [];
-                    CampsiteDirections = [];
-                    CampsiteWeather = [];
-                    CampsiteWater = [];
-                    CampsiteToilets = [];
-                    CampsiteShowers = [];
-                    $(".accordion").accordion({
-                        collapsible: true,
-                        active: true,
-                        //makes the accordions expand
-                        heightStyle: "content",
-                    });
+
+
                 }
+                CampsiteNames = [];
+                CampsiteDescription = [];
+                CampsiteDirections = [];
+                CampsiteWeather = [];
+                CampsiteWater = [];
+                CampsiteToilets = [];
+                CampsiteShowers = [];
+                $(".accordion").accordion({
+                    collapsible: true,
+                    active: true,
+                    //makes the accordions expand
+                    heightStyle: "content",
+                });
             }
+        }
 
-        });
+    });
 };
 
 
