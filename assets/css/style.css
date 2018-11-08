@@ -41,3 +41,20 @@ h3, p{
     background-color: rgb(250, 248, 248, 0.7);
     font-family: 'Acme', sans-serif;
 }
+
+/*for the faux-links in the main results page*/
+.faux-link {
+    text-decoration: underline;
+    
+    color: blue;
+}
+
+#favoritesBox {
+    background-color: rgb(250, 248, 248, 0.7);
+}
+
+#favoritesTitle {
+    border-bottom: 1px solid #777777;
+}
+
+
