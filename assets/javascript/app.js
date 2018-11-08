@@ -315,7 +315,7 @@ function camping() {
                 CampsiteWater.push(campData[c].amenities.potableWater[0]);
                 CampsiteToilets.push(campData[c].amenities.toilets[0]);
                 CampsiteShowers.push(campData[c].amenities.showers[0]);
-                console.log(CampsiteNames);
+                // console.log(CampsiteNames);
 
                 var campsiteInfoWell = $("<div>");
                 campsiteInfoWell.addClass("accordion")
