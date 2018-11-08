@@ -257,7 +257,7 @@ function camping() {
 
                         campsiteInfoWell.append(
                             "<h3>" + CampsiteNames[v] + "</h3><div><p>" + "Description : " + CampsiteDescription[v] + "</p>"
-                            + "<a href=" + CampsiteDirections[v] + ">" + "Directions" + "</a>" + "<p>"
+                            + "<a href=" + CampsiteDirections[v] + " target='_blank'>" + "Directions" + "</a>" + "<p>"
                             + "Weather Overview : " + CampsiteWeather[v] + "</p><p>" + "Potable Water : "
                             + CampsiteWater[v] + "</p><p>" + "Toilets : " + CampsiteToilets[v] + "</p><p>"
                             + "Showers : " + CampsiteShowers[v] + "</p></div>"
@@ -281,11 +281,8 @@ function camping() {
                     $(".accordion").accordion({
                         collapsible: true,
                         active: true,
-<<<<<<< HEAD
-=======
                         //makes the accordions expand
                         heightStyle: "content",
->>>>>>> master
                     });
                 }
             }
