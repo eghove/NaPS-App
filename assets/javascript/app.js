@@ -212,7 +212,8 @@ function Search() {
 
             $(".back").on("click", function () {
                 $("#signin").css("display", "block");
-                $(".container" + o).css("display", "none")
+                $(".container" + o).css("display", "none");
+                $(".accordions" + o).empty();
             });
 
         });
