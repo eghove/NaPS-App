@@ -113,12 +113,12 @@ function Search() {
     $("#accordion").accordion("destroy")
 
     // this will catch the url for the campsites that will be passed into the campground ajax.
-    // campURL = [];
+    
 
     // this will pick up the text from the input box
 
     npsURL = "https://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
-    //console.log(npsURL);
+    
 
 
 
@@ -160,9 +160,9 @@ function Search() {
 
             var displayParkName = $("<h3>" + ParkNames[j] + "</h3>");
 
-            //created a faux link    
+            //for the click to learn more button    
             var displayParkDescription = $("<div><p>" + ParkDescription[j] + "</p><div id='secondbutton" + j + "'></div></div>");
-            //apending the necessary classes and values for the secondary results function to run
+
 
 
             //appending everything to the accordion and invoking the accordion function
@@ -399,11 +399,6 @@ function weatherQuery(latitude, longitude) {
             weatherDescrip = response.weather[0].description;
 
 
-            // console.log(temperature);
-            // console.log(windspeed);
-            // console.log(humidity);
-            // console.log(weatherDescrip);
-
             var WeatherWell = $("<table>");
             WeatherWell.addClass("table");
 
@@ -416,7 +411,7 @@ function weatherQuery(latitude, longitude) {
             $("#weather" + o).append(WeatherWell);
 
 
-            //console.log(temperature + " " + windspeed + " " + humidity + " " + weatherDescrip);
+            
         })
 }
 
@@ -446,10 +441,10 @@ function NASAQuery(latitude, longitude) {
             // throw in the src for the nasa images
             imageWell.html("<img src=" + NASAImages + ">");
             //used this console to make sure real images and fail images are showing up in the rigth places
-            //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
+           
 
             $("#img" + o).append(imageWell);
-            //console.log(imageWell);
+            
 
         })
         .fail(function (error) {
@@ -462,11 +457,10 @@ function NASAQuery(latitude, longitude) {
             var imageWell = $("<div>");
             // throw in the src for the nasa images
             imageWell.html("<img src=" + NASAImages + ">");
-            //used this console to make sure real images and fail images are showing up in the rigth places
-            //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
+           
 
             $("#img" + o).append(imageWell);
-            //console.log(imageWell);
+            
 
         });
 };
