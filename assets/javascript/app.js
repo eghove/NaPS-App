@@ -46,7 +46,7 @@ $(document).ready(function () {
         collapsible: true,
         active: true
     });
-    console.log('ready')
+    //console.log('ready')
     //checks to see if the user is authenticated
     authUserCheck();
     //on click listener for the logout button
@@ -118,7 +118,7 @@ function Search() {
     // this will pick up the text from the input box
 
     npsURL = "https://developer.nps.gov/api/v1/parks?q=" + npsSearch + "&api_key=z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc";
-    console.log(npsURL);
+    //console.log(npsURL);
 
 
 
@@ -127,7 +127,7 @@ function Search() {
         url: npsURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
+        //console.log(response);
         // data retrieved from the park api
         var ParkData = response.data;
         // for loop to gather all relevant peices of info from the api and store them in arrays 
@@ -168,7 +168,7 @@ function Search() {
             //appending everything to the accordion and invoking the accordion function
             $("#accordion").append(displayParkName).append(displayParkDescription)
             $(function () {
-                console.log("accordion")
+                //console.log("accordion")
                 $("#accordion").accordion({
                     collapsible: true,
                     active: true
@@ -200,7 +200,7 @@ function Search() {
         $(document).ready(function () {
 
             $(".button").on("click", function () {
-                console.log(this.value);
+                //console.log(this.value);
                 o = this.value;
                 $("#signin").css("display", "none");
                 $("#favoritesBox").css("display", "none");
@@ -222,7 +222,7 @@ function Search() {
             });
 
             $(".favButtons").on("click", function () {
-                console.log(this.value)
+                //console.log(this.value)
                 var favParks = $("<button>");
                 favParks.addClass("favParks");
                 favParks.css("margin", "10px")
@@ -287,12 +287,12 @@ function Search() {
     });
 
     //console.log(ParkNames);
-    console.log(latLongParkData);
+    // console.log(latLongParkData);
 
 };
 
 function camping() {
-    console.log("hi");
+    // console.log("hi");
     $(".accordions" + o).empty()
 
     $.ajax({
@@ -300,7 +300,7 @@ function camping() {
         method: "GET"
     }).then(function (response) {
         var campData = response.data;
-        console.log("campdata:", campData);
+        // console.log("campdata:", campData);
 
 
         if (campData.length === 0) {
@@ -330,13 +330,9 @@ function camping() {
                         + CampsiteWater[v] + "</p><p>" + "Toilets : " + CampsiteToilets[v] + "</p><p>"
                         + "Showers : " + CampsiteShowers[v] + "</p></div>"
                     )
-                    console.log("append camps")
+                    // console.log("append camps")
 
                     $(".accordions" + o).append(campsiteInfoWell);
-
-
-
-
 
                 }
                 CampsiteNames = [];
@@ -379,7 +375,7 @@ function weatherQuery(latitude, longitude) {
 
     // setting up the query url
     var weatherQueryURL = weatherBaseURL + "lat=" + weatherLatitudeParam + "&lon=" + weatherLongtudeParam + "&appid=" + weatherAPIkey;
-    console.log(weatherQueryURL);
+    // console.log(weatherQueryURL);
 
     //the Ajax call
     $.ajax({
@@ -403,10 +399,10 @@ function weatherQuery(latitude, longitude) {
             weatherDescrip = response.weather[0].description;
 
 
-            console.log(temperature);
-            console.log(windspeed);
-            console.log(humidity);
-            console.log(weatherDescrip);
+            // console.log(temperature);
+            // console.log(windspeed);
+            // console.log(humidity);
+            // console.log(weatherDescrip);
 
             var WeatherWell = $("<table>");
             WeatherWell.addClass("table");
@@ -416,16 +412,6 @@ function weatherQuery(latitude, longitude) {
                 "<tbody><tr><td>" + temperature + "F</td><td>" + windspeed + "mph</td><td>" + humidity + "%</td><td>" + weatherDescrip + "</td></tr></tbody>"
             )
 
-
-            // var WeatherWell = $("<p>");
-
-            // WeatherWell.append("<br><br> Temperature : " + WeatherTemperature[b] + "F");
-
-            // WeatherWell.append("<br><br> Wind Speed : " + WeatherWind[b] + "mph");
-
-            // WeatherWell.append("<br><br> Humidity : " + WeatherHumidity[b] + "%");
-
-            // WeatherWell.append("<br><br> Weather Description : " + WeatherDescription[b]);
 
             $("#weather" + o).append(WeatherWell);
 
@@ -535,8 +521,4 @@ function authUserCheck() {
 function logOut() {
     firebase.auth().signOut();
 };
-
-
- //MAIN PROCESSES
- //===============================================================
 
