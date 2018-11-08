@@ -37,10 +37,6 @@ var CampsiteWater = [];
 var CampsiteToilets = [];
 var CampsiteShowers = [];
 
-var WeatherTemperature = [];
-var WeatherWind = [];
-var WeatherHumidity = [];
-var WeatherDescription = [];
 
 
 //EVENT LISTENERS
@@ -90,11 +86,6 @@ $(document).ready(function () {
         CampsiteWater = [];
         CampsiteToilets = [];
         CampsiteShowers = [];
-
-        WeatherTemperature = [];
-        WeatherWind = [];
-        WeatherHumidity = [];
-        WeatherDescription = [];
 
 
         //prevents from searching an empty string
@@ -204,13 +195,6 @@ function Search() {
         }
         //calls the function that parses the latitude and longitude into something the other APIs can use
         latLongParser();
-        //push the NASA images to NASA Images Array
-        NASAImagePush();
-        WeatherInfoPush();
-
-
-
-
 
 
         $(document).ready(function () {
@@ -223,6 +207,12 @@ function Search() {
                 $(".container" + o).css("display", "block");
                 campURL = campURLarray[o];
                 camping();
+                nasalat = latLongParkData[o][0];
+                nasalon = latLongParkData[o][1]
+                NASAQuery(nasalat, nasalon);
+                weatherlat = latLongParkData[o][0];
+                weatherlon = latLongParkData[o][1];
+                weatherQuery(weatherlat, weatherlon);
             });
 
             $(".back").on("click", function () {
@@ -303,6 +293,7 @@ function Search() {
 
 function camping() {
     console.log("hi");
+    $(".accordions" + o).empty()
 
     $.ajax({
         url: campURL,
@@ -373,6 +364,7 @@ function camping() {
 
 //weather Quaery API
 function weatherQuery(latitude, longitude) {
+    $("#weather" + o).empty()
     // open weather api key
 
     var weatherAPIkey = 'e0517042c4c62f6d8cc8a258ba9ed1b4';
@@ -399,23 +391,17 @@ function weatherQuery(latitude, longitude) {
             var temperature = (response.main.temp - 273.15) * 1.80 + 32;
             var temperature = temperature.toFixed(2);
 
-            WeatherTemperature.push(temperature);
 
             //capture the windspeed
             var windspeed = response.wind.speed;
 
-            WeatherWind.push(windspeed);
-
             //capture the humidity
             var humidity = response.main.humidity;
-
-            WeatherHumidity.push(humidity);
 
             //weather description
             var weatherDescrip = "";
             weatherDescrip = response.weather[0].description;
 
-            WeatherDescription.push(weatherDescrip);
 
             console.log(temperature);
             console.log(windspeed);
@@ -427,7 +413,7 @@ function weatherQuery(latitude, longitude) {
 
             WeatherWell.append(
                 "<thead><tr><th scope='col'>Temperature</th><th scope='col'>Wind Speed</th><th scope='col'>Humidity</th><th scope='col'>Weather Description</th></tr></thead>" +
-                "<tbody><tr><td>" + WeatherTemperature[b] + "F</td><td>" + WeatherWind[b] + "mph</td><td>" + WeatherHumidity[b] + "%</td><td>" + WeatherDescription[b] + "</td></tr></tbody>"
+                "<tbody><tr><td>" + temperature + "F</td><td>" + windspeed + "mph</td><td>" + humidity + "%</td><td>" + weatherDescrip + "</td></tr></tbody>"
             )
 
 
@@ -441,9 +427,8 @@ function weatherQuery(latitude, longitude) {
 
             // WeatherWell.append("<br><br> Weather Description : " + WeatherDescription[b]);
 
-            $("#weather" + b).append(WeatherWell);
+            $("#weather" + o).append(WeatherWell);
 
-            b++;
 
             //console.log(temperature + " " + windspeed + " " + humidity + " " + weatherDescrip);
         })
@@ -451,6 +436,7 @@ function weatherQuery(latitude, longitude) {
 
 //basic NASA Satellinte Imagery API QUERY FUNCTION
 function NASAQuery(latitude, longitude) {
+    $("#img" + o).empty();
     //NASA API Key
     const NASAAPIKey = 'z3gukqYquzKbLQXkLJFI7OpTS88qyjCZV5DbjcHc';
     //base NASA Imagery API
@@ -467,39 +453,35 @@ function NASAQuery(latitude, longitude) {
     })
         .then(function (response) {
             //sets the url for the image to NASAImageURL variables
-            let NASAImageURL = response.url;
+            let NASAImages = response.url;
             //push the url for the image to the NASAImages array
-            NASAImages.push(NASAImageURL);
 
             var imageWell = $("<div>");
             // throw in the src for the nasa images
-            imageWell.html("<img src=" + NASAImages[z] + ">");
+            imageWell.html("<img src=" + NASAImages + ">");
             //used this console to make sure real images and fail images are showing up in the rigth places
             //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
 
-            $("#img" + z).append(imageWell);
+            $("#img" + o).append(imageWell);
             //console.log(imageWell);
-
-            z++;
 
         })
         .fail(function (error) {
             //set up default image
             let defaultImageUrl = 'https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image';
             //push the link to the default image to NASAImages array
-            NASAImages.push(defaultImageUrl);
+            NASAImages = defaultImageUrl;
 
             //copied this code from the .then function above.
             var imageWell = $("<div>");
             // throw in the src for the nasa images
-            imageWell.html("<img src=" + NASAImages[z] + ">");
+            imageWell.html("<img src=" + NASAImages + ">");
             //used this console to make sure real images and fail images are showing up in the rigth places
             //console.log("position in Nasa Images Array: " + z + " " + NASAImages[z] );
 
-            $("#img" + z).append(imageWell);
+            $("#img" + o).append(imageWell);
             //console.log(imageWell);
 
-            z++;
         });
 };
 
@@ -531,18 +513,6 @@ function latLongParser() {
     }
 };
 
-function NASAImagePush() {
-    for (let m = 0; m < latLongParkData.length; m++) {
-        nasalat = latLongParkData[m][0];
-        nasalon = latLongParkData[m][1]
-        NASAQuery(nasalat, nasalon);
-
-    }
-
-    console.log(nasalat)
-    console.log(nasalon)
-    console.log(NASAImages);
-}
 
 //the function that will re-direct the user back to the login page if an account has not yet been created (self-invoking)
 function authUserCheck() {
@@ -566,18 +536,7 @@ function logOut() {
     firebase.auth().signOut();
 };
 
-function WeatherInfoPush() {
-    for (let p = 0; p < latLongParkData.length; p++) {
-        weatherlat = latLongParkData[p][0];
-        weatherlon = latLongParkData[p][1]
-        weatherQuery(weatherlat, weatherlon);
 
-    }
-
-    console.log(nasalat)
-    console.log(nasalon)
-    console.log(NASAImages);
-};
  //MAIN PROCESSES
  //===============================================================
 
