@@ -17,6 +17,7 @@ body{
     height: 100vh;
     /*added this keep the background image from scrolling */
     background-attachment: fixed;
+    /* font family */
     font-family: 'Acme', sans-serif; 
 }
 
@@ -40,13 +41,6 @@ h3, p{
     color: black;
     background-color: rgb(250, 248, 248, 0.7);
     font-family: 'Acme', sans-serif;
-}
-
-/*for the faux-links in the main results page*/
-.faux-link {
-    text-decoration: underline;
-    
-    color: blue;
 }
 
 #favoritesBox {
