@@ -29,3 +29,7 @@ NaPS App uses the following technologies:
 ## What's Next for NaPS App?
 NaPS App will incorporate the following features in the future:
 * Persistence of Favorites after from browser session to browser session,
+* Allow users to search for parks by state,
+* Allow users to search for parks nearby (a geolocation feature),
+* Incorporate user reviews of park campsites, and
+* Add a Donate button so users may contribute to the National Parks Service.
