@@ -1,5 +1,5 @@
 # NaPS App
-NaPS App is front-end web application that allows a user to obtain information about U.S. National Parks. A deployed version of NaPS App may be found here: https://eghove.github.io/NaPS-App/index.html
+NaPS App is a front-end web application that allows a user to obtain information about U.S. National Parks. A deployed version of NaPS App may be found here: https://eghove.github.io/NaPS-App/index.html
 
 ## What is NaPS App?
 NaPS App (or the National Parks App) utilizes several APIs to allow the user to search U.S. National Parks for matching keywords and display information. The application presents campsite data, current weather information from openWeather, and topographic satellite imagery from NASA. The application also uses Google Firebase to authenticate users. A user can also save favorite national parks which persists for the browser session. 
