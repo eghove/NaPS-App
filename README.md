@@ -33,3 +33,7 @@ NaPS App will incorporate the following features in the future:
 * Allow users to search for parks nearby (a geolocation feature),
 * Incorporate user reviews of park campsites, and
 * Add a Donate button so users may contribute to the National Parks Service.
+
+## What Does NaPS App Look Like?
+https://eghove.github.io/img/portfolio/naps-app-2.PNG
+
