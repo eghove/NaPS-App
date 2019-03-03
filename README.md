@@ -35,5 +35,10 @@ NaPS App will incorporate the following features in the future:
 * Add a Donate button so users may contribute to the National Parks Service.
 
 ## What Does NaPS App Look Like?
-https://eghove.github.io/img/portfolio/naps-app-2.PNG
+![Search Screen](https://eghove.github.io/img/portfolio/naps-app-2.PNG "Search Screen")
 
+![Main Search Results](https://eghove.github.io/img/portfolio/naps-app-3.PNG "Main Search Results")
+
+![Search Detail](https://eghove.github.io/img/portfolio/naps-app-4.PNG "Search Detail")
+
+![Park Information](https://eghove.github.io/img/portfolio/naps-app-5.PNG "Park Information")
